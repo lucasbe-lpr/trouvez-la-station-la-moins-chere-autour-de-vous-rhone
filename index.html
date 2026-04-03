@@ -34,7 +34,7 @@
       --gray:     #9E9E9E;
 
       --bg:       #ffffff;
-      --bg-alt:   #f7f8f9;   /* gris très clair conservé uniquement pour les cards stats */
+      --bg-alt:   #f7f8f9;   
       --border:   #e2e5e8;
       --border-lt:#eeeff1;
       --text:     #1a1a1a;
@@ -67,8 +67,7 @@
       background: var(--bg);
       flex-shrink: 0;
       gap: 10px;
-      /* ligne bleue fine en haut — signature PQR */
-      border-top: 3px solid var(--blue);
+
     }
     #cw .cw-header-left { flex: 1; min-width: 0; }
 
@@ -140,7 +139,7 @@
       gap: 7px;
     }
 
-    /* Carburant pills — style editorial */
+    /* Carburant pills */
     #cw .cw-fuels {
       display: grid;
       grid-template-columns: repeat(6, 1fr);
@@ -218,7 +217,7 @@
     }
     #cw #cw-map { width: 100%; height: 100%; }
 
-    /* Légende — fond blanc épuré */
+    /* Légende */
     .cw-legend {
       position: absolute;
       bottom: 8px;
@@ -231,7 +230,6 @@
       font-size: 10px;
       box-shadow: var(--shadow-sm);
       pointer-events: none;
-      border-left: 2px solid var(--blue);
     }
     .cw-legend-title {
       font-weight: 700;
@@ -508,7 +506,7 @@
 
   <!-- FOOTER -->
   <footer>
-    <span>Carte Lucas Bessonnat</span>
+    <span>Carte Lucas Bessonnat v1.0</span>
     <span class="cw-source">Source : <a href="https://data.economie.gouv.fr" target="_blank" rel="noopener">data.economie.gouv.fr</a></span>
   </footer>
 
@@ -776,7 +774,7 @@
       <div class="cwp-header">
         <div class="cwp-brand">Station service</div>
         <div class="cwp-name">${ville}</div>
-        <div class="cwp-addr">${adresse}${cp ? ' — ' + cp : ''}</div>
+        <div class="cwp-addr">${adresse.toUpperCase()}</div>
       </div>
       <div class="cwp-body">
         <div class="cwp-prices">${pricesHTML}</div>
