@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-  <title>Essence, gazole, E10… Trouvez la station la moins chère autour de vous</title>
+  <title>Essence, gazole, E10… Trouvez la station la moins chère</title>
 
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
@@ -21,11 +21,8 @@
       background: transparent;
     }
 
-    /* ================================================================
-       NAMESPACE #cw
-    ================================================================ */
     #cw {
-      --blue:     #0068B1;   /* bleu Le Progrès */
+      --blue:     #0068B1;
       --blue-dk:  #004f87;
       --blue-lt:  #e8f3fb;
       --red:      #c0392b;
@@ -34,16 +31,13 @@
       --gray:     #9E9E9E;
 
       --bg:       #ffffff;
-      --bg-alt:   #f7f8f9;   
       --border:   #e2e5e8;
       --border-lt:#eeeff1;
       --text:     #1a1a1a;
       --muted:    #6b7280;
-      --radius:   0px;
 
       --font: 'Merriweather Sans', sans-serif;
       --shadow-sm: 0 1px 4px rgba(0,0,0,0.07);
-      --shadow:    0 2px 12px rgba(0,0,0,0.09);
 
       font-family: var(--font);
       color: var(--text);
@@ -67,20 +61,8 @@
       background: var(--bg);
       flex-shrink: 0;
       gap: 10px;
-
     }
     #cw .cw-header-left { flex: 1; min-width: 0; }
-
-    #cw .cw-eyebrow {
-      display: inline-flex;
-      align-items: center;
-      font-size: 9.5px;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 1.4px;
-      color: var(--blue);
-      margin-bottom: 2px;
-    }
 
     #cw h1 {
       margin: 0;
@@ -99,7 +81,6 @@
       font-weight: 300;
     }
 
-    /* Bouton actualiser — minimaliste */
     #cw .cw-refresh {
       display: flex;
       align-items: center;
@@ -116,13 +97,8 @@
       white-space: nowrap;
       flex-shrink: 0;
       font-family: var(--font);
-      letter-spacing: 0.2px;
     }
-    #cw .cw-refresh:hover {
-      border-color: var(--blue);
-      color: var(--blue);
-      background: var(--bg);
-    }
+    #cw .cw-refresh:hover { border-color: var(--blue); color: var(--blue); }
     #cw .cw-refresh svg { transition: transform 0.5s; flex-shrink: 0; }
     #cw .cw-refresh.spinning svg { animation: cw-spin 0.9s linear infinite; }
 
@@ -139,7 +115,6 @@
       gap: 7px;
     }
 
-    /* Carburant pills */
     #cw .cw-fuels {
       display: grid;
       grid-template-columns: repeat(6, 1fr);
@@ -156,21 +131,10 @@
       transition: all 0.13s;
       user-select: none;
       color: var(--muted);
-      background: var(--bg);
-      line-height: 1;
-      letter-spacing: 0.2px;
     }
-    #cw .cw-fuel:hover {
-      border-color: var(--blue);
-      color: var(--blue);
-    }
-    #cw .cw-fuel.active {
-      background: var(--blue);
-      color: #fff;
-      border-color: var(--blue);
-    }
+    #cw .cw-fuel:hover { border-color: var(--blue); color: var(--blue); }
+    #cw .cw-fuel.active { background: var(--blue); color: #fff; border-color: var(--blue); }
 
-    /* Filtre commune */
     #cw .cw-filter-row { display: flex; gap: 8px; align-items: flex-end; }
     #cw .cw-select-wrap { flex: 1; }
     #cw .cw-label {
@@ -196,9 +160,7 @@
       font-family: var(--font);
       font-weight: 600;
       text-transform: uppercase;
-      letter-spacing: 0.3px;
       appearance: none;
-      -webkit-appearance: none;
       background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%236b7280'/%3E%3C/svg%3E");
       background-repeat: no-repeat;
       background-position: right 9px center;
@@ -207,223 +169,99 @@
     #cw select:focus { border-color: var(--blue); }
 
     /* ================================================================
-       MAP
+       MAP & OVERLAYS
     ================================================================ */
-    #cw .cw-map-wrap {
-      position: relative;
-      flex: 1;
-      min-height: 0;
-      z-index: 1;
-    }
+    #cw .cw-map-wrap { position: relative; flex: 1; min-height: 0; z-index: 1; }
     #cw #cw-map { width: 100%; height: 100%; }
 
-    /* Légende */
     .cw-legend {
       position: absolute;
-      bottom: 8px;
-      left: 8px;
-      z-index: 500;
+      bottom: 8px; left: 8px; z-index: 500;
       background: rgba(255,255,255,0.97);
       border-radius: 2px;
       padding: 6px 9px;
-      font-family: 'Merriweather Sans', sans-serif;
       font-size: 10px;
       box-shadow: var(--shadow-sm);
       pointer-events: none;
     }
-    .cw-legend-title {
-      font-weight: 700;
-      font-size: 9px;
-      text-transform: uppercase;
-      letter-spacing: 0.6px;
-      color: var(--blue);
-      margin-bottom: 4px;
-    }
+    .cw-legend-title { font-weight: 700; font-size: 9px; text-transform: uppercase; color: var(--blue); margin-bottom: 4px; }
     .cw-legend-row { display: flex; align-items: center; gap: 5px; margin-bottom: 2px; color: #333; }
     .cw-legend-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
 
-    /* ================================================================
-       OVERLAY (loader / no-results)
-    ================================================================ */
     #cw .cw-overlay {
-      position: absolute;
-      inset: 0;
-      background: rgba(255,255,255,0.95);
-      z-index: 1000;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
-      font-size: 13px;
-      color: var(--muted);
-      opacity: 0;
-      pointer-events: none;
-      transition: opacity 0.22s;
-      text-align: center;
-      padding: 20px;
-      font-family: 'Merriweather Sans', sans-serif;
+      position: absolute; inset: 0;
+      background: rgba(255,255,255,0.95); z-index: 1000;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      gap: 10px; font-size: 13px; color: var(--muted);
+      opacity: 0; pointer-events: none; transition: opacity 0.22s; text-align: center;
     }
     #cw .cw-overlay.active { opacity: 1; pointer-events: all; }
-
     .cw-spinner {
       width: 22px; height: 22px;
-      border: 2px solid var(--border);
-      border-top-color: var(--blue);
-      border-radius: 50%;
-      animation: cw-spin 0.75s linear infinite;
+      border: 2px solid var(--border); border-top-color: var(--blue);
+      border-radius: 50%; animation: cw-spin 0.75s linear infinite;
     }
     @keyframes cw-spin { to { transform: rotate(360deg); } }
 
     /* ================================================================
-       STATS BAR
+       STATS & FOOTER
     ================================================================ */
     #cw .cw-stats {
-      padding: 7px 14px;
-      background: var(--bg);
-      border-top: 1px solid var(--border);
-      flex-shrink: 0;
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 0;
+      padding: 7px 14px; background: var(--bg); border-top: 1px solid var(--border);
+      flex-shrink: 0; display: grid; grid-template-columns: repeat(4, 1fr); gap: 0;
     }
-    #cw .cw-stat {
-      padding: 5px 8px 5px 0;
-      display: flex;
-      flex-direction: column;
-      gap: 1px;
-      border-right: 1px solid var(--border-lt);
-    }
+    #cw .cw-stat { padding: 5px 8px 5px 0; display: flex; flex-direction: column; gap: 1px; border-right: 1px solid var(--border-lt); }
     #cw .cw-stat:last-child { border-right: none; }
     #cw .cw-stat:not(:first-child) { padding-left: 10px; }
+    #cw .cw-stat-label { font-size: 8.5px; font-weight: 700; color: var(--muted); text-transform: uppercase; }
+    #cw .cw-stat-value { font-size: 13.5px; font-weight: 700; color: var(--blue); font-variant-numeric: tabular-nums; line-height: 1.1; }
+    #cw .cw-stat-sub { font-size: 8.5px; color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; text-transform: uppercase; }
 
-    #cw .cw-stat-label {
-      font-size: 8.5px;
-      font-weight: 700;
-      color: var(--muted);
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-    }
-    #cw .cw-stat-value {
-      font-size: 13.5px;
-      font-weight: 700;
-      color: var(--blue);
-      font-variant-numeric: tabular-nums;
-      line-height: 1.1;
-    }
-    #cw .cw-stat-sub {
-      font-size: 8.5px;
-      color: var(--muted);
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      font-weight: 300;
-    }
-
-    /* ================================================================
-       FOOTER
-    ================================================================ */
     #cw footer {
-      padding: 4px 14px;
-      background: var(--bg);
-      border-top: 1px solid var(--border-lt);
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      font-size: 9px;
-      color: #b0b5bc;
-      flex-shrink: 0;
-      letter-spacing: 0.2px;
+      padding: 4px 14px; background: var(--bg); border-top: 1px solid var(--border-lt);
+      display: flex; justify-content: space-between; align-items: center;
+      font-size: 9px; color: #b0b5bc; flex-shrink: 0;
     }
     #cw footer a { color: #b0b5bc; text-decoration: none; }
     #cw footer a:hover { color: var(--blue); }
-    #cw footer .cw-source { font-weight: 300; }
 
     /* ================================================================
        POPUP LEAFLET
     ================================================================ */
-    .leaflet-popup-content-wrapper {
-      border-radius: 2px !important;
-      box-shadow: 0 4px 24px rgba(0,0,0,0.13) !important;
-      padding: 0 !important;
-      overflow: hidden;
-      font-family: 'Merriweather Sans', sans-serif !important;
-      border: 1px solid #e2e5e8 !important;
-    }
+    .leaflet-popup-content-wrapper { border-radius: 2px !important; box-shadow: 0 4px 24px rgba(0,0,0,0.13) !important; padding: 0 !important; overflow: hidden; font-family: var(--font) !important; border: 1px solid var(--border) !important; }
     .leaflet-popup-content { margin: 0 !important; width: 228px !important; }
     .leaflet-popup-tip-container { display: none; }
     .leaflet-popup { margin-bottom: 14px; }
-
-    /* Popup header */
-    .cwp-header {
-      padding: 10px 12px 8px;
-      border-bottom: 1px solid #eef0f2;
-      background: #fff;
-    }
-    .cwp-brand { display: none; }
+    .cwp-header { padding: 10px 12px 8px; border-bottom: 1px solid #eef0f2; background: #fff; }
     .cwp-name { margin: 0; font-size: 12.5px; font-weight: 700; color: #1a1a1a; line-height: 1.3; }
     .cwp-addr { font-size: 9.5px; color: #6b7280; margin-top: 2px; font-weight: 300; }
-
-    /* Popup body */
     .cwp-body { padding: 8px 12px 10px; background: #fff; }
     .cwp-prices { display: grid; grid-template-columns: 1fr 1fr; gap: 4px; margin-bottom: 7px; }
-    .cwp-price {
-      border: 1px solid #eef0f2;
-      border-radius: 2px;
-      padding: 5px 7px;
-      background: #fff;
-    }
-    .cwp-price.featured {
-      background: var(--blue-lt, #e8f3fb);
-      border-color: #b8d9ef;
-    }
+    .cwp-price { border: 1px solid #eef0f2; border-radius: 2px; padding: 5px 7px; background: #fff; }
+    .cwp-price.featured { background: var(--blue-lt); border-color: #b8d9ef; }
     .cwp-price.rupture { opacity: 0.5; }
-    .cwp-price-name { font-size: 9.5px; font-weight: 700; text-transform: uppercase; margin-bottom: 1px; letter-spacing: 0.3px; color: var(--blue, #0068B1); }
+    .cwp-price-name { font-size: 9.5px; font-weight: 700; text-transform: uppercase; margin-bottom: 1px; color: var(--blue); }
     .cwp-price-val { font-size: 13.5px; font-weight: 700; color: #1a1a1a; font-variant-numeric: tabular-nums; line-height: 1.2; }
-    .cwp-price.rupture .cwp-price-val { font-size: 9.5px; color: #c0392b; }
-    .cwp-price-date { font-size: 8.5px; color: #9E9E9E; font-weight: 300; }
+    .cwp-price.rupture .cwp-price-val { font-size: 9.5px; color: var(--red); }
+    .cwp-price-date { font-size: 8.5px; color: var(--gray); font-weight: 300; }
     .cwp-tags { display: flex; flex-wrap: wrap; gap: 4px; }
-    .cwp-tag {
-      font-size: 9.5px;
-      padding: 2px 8px;
-      border-radius: 2px;
-      background: #f0f7fd;
-      color: var(--blue, #0068B1);
-      font-weight: 600;
-      border: 1px solid #c6dff2;
-      letter-spacing: 0.2px;
-    }
+    .cwp-tag { font-size: 9.5px; padding: 2px 8px; border-radius: 2px; background: #f0f7fd; color: var(--blue); font-weight: 600; border: 1px solid #c6dff2; }
 
-    /* ================================================================
-       RESPONSIVE
-    ================================================================ */
     @media (max-width: 440px) {
       #cw .cw-fuels   { grid-template-columns: repeat(3, 1fr); }
       #cw .cw-stats   { grid-template-columns: repeat(2, 1fr); }
-      #cw h1          { font-size: 13.5px; }
-      #cw .cw-stat-value { font-size: 12.5px; }
-      #cw .cw-header  { padding: 8px 11px 8px; }
-      #cw .cw-controls{ padding: 7px 11px 6px; }
-      #cw .cw-stats   { padding: 6px 11px; }
-      #cw footer      { padding: 4px 11px; }
       #cw .cw-stat:nth-child(2n) { border-right: none; }
       #cw .cw-stat:nth-child(odd) { padding-left: 0; }
       #cw .cw-stat:nth-child(n+3) { border-top: 1px solid var(--border-lt); padding-top: 6px; margin-top: 2px; }
-    }
-    @media (max-height: 520px) {
-      #cw .cw-header  { padding: 6px 14px; }
-      #cw .cw-controls { gap: 5px; padding: 5px 14px; }
-      #cw .cw-stats   { padding: 4px 14px; }
     }
   </style>
 </head>
 <body>
 <div id="cw">
 
-  <!-- HEADER -->
   <div class="cw-header">
     <div class="cw-header-left">
-      <h1>Prix des carburants (Rhône)</h1>
+      <h1 id="cw-title">Prix des carburants (Rhône)</h1>
       <div class="cw-update" id="cw-update">Chargement…</div>
     </div>
     <button class="cw-refresh" id="cw-refresh-btn" onclick="cwRefresh()">
@@ -434,7 +272,6 @@
     </button>
   </div>
 
-  <!-- CONTROLS -->
   <div class="cw-controls">
     <div class="cw-fuels" id="cw-fuels">
       <div class="cw-fuel active" data-fuel="Gazole">Gazole</div>
@@ -444,7 +281,9 @@
       <div class="cw-fuel" data-fuel="E85">E85</div>
       <div class="cw-fuel" data-fuel="GPLc">GPLc</div>
     </div>
+    
     <div class="cw-filter-row">
+      <!-- Filtre Commune (seul) -->
       <div class="cw-select-wrap">
         <label class="cw-label" for="cw-ville">Commune</label>
         <select id="cw-ville">
@@ -454,11 +293,8 @@
     </div>
   </div>
 
-  <!-- MAP -->
   <div class="cw-map-wrap">
     <div id="cw-map"></div>
-
-    <!-- Légende -->
     <div class="cw-legend" id="cw-legend">
       <div class="cw-legend-title">Prix/litre</div>
       <div class="cw-legend-row"><span class="cw-legend-dot" style="background:#1B5E20"></span>Moins cher</div>
@@ -466,22 +302,16 @@
       <div class="cw-legend-row"><span class="cw-legend-dot" style="background:#B71C1C"></span>Plus cher</div>
       <div class="cw-legend-row"><span class="cw-legend-dot" style="background:#9E9E9E"></span>Indisponible</div>
     </div>
-
-    <!-- Loader -->
     <div class="cw-overlay active" id="cw-loader">
       <div class="cw-spinner"></div>
       <span>Récupération des données…</span>
     </div>
-
-    <!-- No results -->
     <div class="cw-overlay" id="cw-empty">
-      <div style="font-size:20px">⛽</div>
       <div style="font-weight:700; color:#0068B1; margin-bottom:3px; font-size:13px">Aucune station trouvée</div>
       <div style="font-size:11px; font-weight:300">Essayez une autre commune.</div>
     </div>
   </div>
 
-  <!-- STATS -->
   <div class="cw-stats">
     <div class="cw-stat">
       <div class="cw-stat-label">Stations</div>
@@ -496,7 +326,7 @@
     <div class="cw-stat">
       <div class="cw-stat-label">Prix moyen</div>
       <div class="cw-stat-value" id="stat-avg">—</div>
-      <div class="cw-stat-sub">RHÔNE</div>
+      <div class="cw-stat-sub" id="stat-avg-sub">...</div>
     </div>
     <div class="cw-stat">
       <div class="cw-stat-label">Prix max.</div>
@@ -505,9 +335,8 @@
     </div>
   </div>
 
-  <!-- FOOTER -->
   <footer>
-    <span>Carte Lucas Bessonnat v1.1</span>
+    <span>Carte Lucas Bessonnat v1.2</span>
     <span class="cw-source">Source : <a href="https://data.economie.gouv.fr" target="_blank" rel="noopener">data.economie.gouv.fr</a></span>
   </footer>
 
@@ -517,46 +346,32 @@
 (function () {
   'use strict';
 
-  // ============================================================
-  // CONFIG
-  // ============================================================
-  const GEOJSON_URL = 'https://object.files.data.gouv.fr/hydra-geojson/hydra-geojson/edd67f5b-46d0-4663-9de9-e5db1c880160.geojson';
-  const DEPT_RHONE  = '69';
-  const LYON_CENTER = [45.75, 4.85];
-  const DEFAULT_ZOOM = 10;
-
-  const FUEL_COLORS = {
-    'Gazole': '#1565C0', 'SP95': '#2E7D32', 'SP98': '#6A1B9A',
-    'E10': '#00838F',    'E85': '#E65100',  'GPLc': '#AD1457'
-  };
-  const FUEL_PRICE_KEYS = {
-    'Gazole': 'Prix Gazole', 'SP95': 'Prix SP95', 'SP98': 'Prix SP98',
-    'E10': 'Prix E10',       'E85': 'Prix E85',   'GPLc': 'Prix GPLc'
-  };
-  const FUEL_DATE_KEYS = {
-    'Gazole': 'Prix Gazole mis à jour le', 'SP95': 'Prix SP95 mis à jour le',
-    'SP98':   'Prix SP98 mis à jour le',   'E10':  'Prix E10 mis à jour le',
-    'E85':    'Prix E85 mis à jour le',    'GPLc': 'Prix GPLc mis à jour le'
+  const GEOJSON_URL = 'https://data.economie.gouv.fr/api/explore/v2.1/catalog/datasets/prix-des-carburants-en-france-flux-instantane-v2/exports/geojson';
+  
+  const DEPTS = {
+    '69': { name: 'Rhône', center: [45.75, 4.85], zoom: 10 },
+    '42': { name: 'Loire', center: [45.60, 4.18], zoom: 9 },
+    '43': { name: 'Haute-Loire', center: [45.04, 3.88], zoom: 10 },
+    '01': { name: 'Ain', center: [46.10, 5.25], zoom: 9 }
   };
 
+  const FUEL_PRICE_KEYS = { 'Gazole': 'gazole_prix', 'SP95': 'sp95_prix', 'SP98': 'sp98_prix', 'E10': 'e10_prix', 'E85': 'e85_prix', 'GPLc': 'gplc_prix' };
+  const FUEL_DATE_KEYS = { 'Gazole': 'gazole_maj', 'SP95': 'sp95_maj', 'SP98': 'sp98_maj', 'E10': 'e10_maj', 'E85': 'e85_maj', 'GPLc': 'gplc_maj' };
+
   // ============================================================
-  // STATE
+  // PARAMÈTRE DU DÉPARTEMENT
   // ============================================================
   const state = {
     map: null, markersLayer: null, rawData: null,
-    activeFuel: 'Gazole', filters: { ville: 'all' },
+    activeFuel: 'Gazole', filters: { dept: '69', ville: 'all' },
     lastFetch: null, priceRange: { min: 0, max: 0 }
   };
 
-  // ============================================================
-  // HELPERS
-  // ============================================================
   function fmtNum(v) {
     if (v == null || v === '') return null;
     const n = parseFloat(v);
     return isNaN(n) ? null : n;
   }
-
   function fmtDate(str) {
     if (!str) return null;
     try {
@@ -568,7 +383,6 @@
       return `${Math.floor(diffH / 24)}j`;
     } catch { return null; }
   }
-
   function getPriceColor(price, min, max) {
     if (price === null) return '#9E9E9E';
     if (max === min) return '#F9A825';
@@ -577,38 +391,55 @@
     if (r < 0.66) return '#F9A825';
     return '#B71C1C';
   }
-
   function darken(hex) {
     try {
-      let r = parseInt(hex.slice(1,3),16)-40,
-          g = parseInt(hex.slice(3,5),16)-40,
-          b = parseInt(hex.slice(5,7),16)-40;
+      let r = parseInt(hex.slice(1,3),16)-40, g = parseInt(hex.slice(3,5),16)-40, b = parseInt(hex.slice(5,7),16)-40;
       return '#'+[r,g,b].map(x=>Math.max(0,x).toString(16).padStart(2,'0')).join('');
     } catch { return '#333'; }
   }
-
-  function capFirst(s) {
-    if (!s) return '';
-    return s.charAt(0).toUpperCase() + s.slice(1).toLowerCase();
+  function capFirst(s) { return !s ? '' : s.charAt(0).toUpperCase() + s.slice(1).toLowerCase(); }
+  function getRuptureType(p, fuel) {
+    if (!p) return null;
+    try {
+      const raw = p.rupture;
+      if (raw == null || raw === '') return null;
+      const arr = typeof raw === 'string' ? JSON.parse(raw) : raw;
+      if (!Array.isArray(arr)) return null;
+      const found = arr.find(r => r && r['@nom'] === fuel);
+      if (!found) return null;
+      const t = String(found['@type'] || '').toLowerCase();
+      if (t.startsWith('def')) return 'definitive';
+      if (t.startsWith('temp')) return 'temporaire';
+      return null;
+    } catch { return null; }
+  }
+  function is24h(p) {
+    if (!p) return false;
+    try {
+      const raw = p.horaires;
+      if (raw == null) return false;
+      const h = typeof raw === 'string' ? JSON.parse(raw) : raw;
+      if (!h || typeof h !== 'object') return false;
+      return h['@automate-24-24'] !== undefined;
+    } catch { return false; }
   }
 
-  // ============================================================
-  // DATA FETCH
-  // ============================================================
   async function fetchData() {
     showLoader(true);
     try {
       const resp = await fetch(GEOJSON_URL);
       if (!resp.ok) throw new Error('HTTP ' + resp.status);
       const geojson = await resp.json();
+      const features = Array.isArray(geojson.features) ? geojson.features : [];
 
       state.rawData = {
         ...geojson,
-        features: geojson.features.filter(f => {
-          const dept = String(f.properties['code_departement'] || f.properties['Département'] || '');
-          const cp   = String(f.properties['Code postal'] || '');
-          return dept === DEPT_RHONE || dept === 'Rhône'
-              || cp.startsWith('69') || cp.startsWith('693') || cp.startsWith('694');
+        features: features.filter(f => {
+          const p = f.properties || {};
+          const dept = String(p.code_departement || p['Département'] || p.departement || '').padStart(2, '0');
+          const cp   = String(p['Code postal'] || p.code_postal || p.cp || '');
+          // On télécharge uniquement la data du département ciblé dans state.filters.dept
+          return dept === state.filters.dept || cp.startsWith(state.filters.dept);
         })
       };
 
@@ -616,23 +447,21 @@
       populateVilleFilter();
       update();
     } catch (e) {
-      console.error('Erreur fetch:', e);
       const el = document.getElementById('cw-loader');
-      el.innerHTML = '<span style="color:#c0392b;font-weight:700">⚠ Erreur de chargement<br><small style="font-weight:300">Vérifiez votre connexion.</small></span>';
+      el.innerHTML = '<span style="color:#c0392b;font-weight:700">Erreur de chargement<br><small style="font-weight:300">Vérifiez votre connexion.</small></span>';
       el.classList.add('active');
     }
   }
 
-  // ============================================================
-  // POPULATE COMMUNE FILTER
-  // ============================================================
   function populateVilleFilter() {
     if (!state.rawData) return;
     const villes = new Set();
     state.rawData.features.forEach(f => {
-      const v = f.properties['Ville'] || f.properties['commune'];
+      const p = f.properties || {};
+      const v = p['Ville'] || p.ville || p.commune;
       if (v) villes.add(capFirst(v));
     });
+
     const sel = document.getElementById('cw-ville');
     sel.innerHTML = '<option value="all">Toutes les communes</option>';
     [...villes].sort().forEach(v => {
@@ -640,31 +469,29 @@
       opt.value = v.toUpperCase(); opt.textContent = v.toUpperCase();
       sel.appendChild(opt);
     });
+    sel.value = state.filters.ville;
   }
 
-  // ============================================================
-  // UPDATE
-  // ============================================================
   function update() {
     if (!state.rawData) return;
     showLoader(false);
 
-    const fuel     = state.activeFuel;
+    const fuel = state.activeFuel;
     const priceKey = FUEL_PRICE_KEYS[fuel];
-    const dateKey  = FUEL_DATE_KEYS[fuel];
+    const dateKey = FUEL_DATE_KEYS[fuel];
 
     let features = state.rawData.features.filter(f => {
-      const p = f.properties;
+      const p = f.properties || {};
       if (state.filters.ville !== 'all') {
-        const v = (p['Ville'] || p['commune'] || '').toUpperCase();
+        const v = (p['Ville'] || p.ville || p.commune || '').toUpperCase();
         if (v !== state.filters.ville) return false;
       }
-      const rupDef = p['Carburants en rupture definitive'] || '';
-      if (rupDef.includes(fuel)) return false;
+      const rupType = getRuptureType(p, fuel);
+      if (rupType === 'definitive') return false;
       return true;
     });
 
-    const prices = features.map(f => fmtNum(f.properties[priceKey])).filter(v => v !== null);
+    const prices = features.map(f => fmtNum((f.properties || {})[priceKey])).filter(v => v !== null);
     state.priceRange = {
       min: prices.length ? Math.min(...prices) : 0,
       max: prices.length ? Math.max(...prices) : 0
@@ -677,17 +504,13 @@
     document.getElementById('cw-empty').classList.toggle('active', features.length === 0);
   }
 
-  // ============================================================
-  // RENDER MARKERS
-  // ============================================================
   function renderMarkers(features, fuel, priceKey, dateKey) {
     if (state.markersLayer) state.map.removeLayer(state.markersLayer);
-
     const { min, max } = state.priceRange;
     const markers = [];
 
     features.forEach(f => {
-      const p = f.properties;
+      const p = f.properties || {};
       let lat = null, lng = null;
 
       if (p.latitude != null && p.longitude != null) {
@@ -695,10 +518,12 @@
         const rawLng = parseFloat(p.longitude);
         lat = Math.abs(rawLat) > 1000 ? rawLat / 100000 : rawLat;
         lng = Math.abs(rawLng) > 1000 ? rawLng / 100000 : rawLng;
-      } else if (f.geometry?.coordinates) {
-        [lng, lat] = f.geometry.coordinates;
+      } else if (p.lat != null && p.lon != null) {
+        lat = parseFloat(p.lat); lng = parseFloat(p.lon);
+      } else if (f.geometry && Array.isArray(f.geometry.coordinates)) {
+        lng = f.geometry.coordinates[0]; lat = f.geometry.coordinates[1];
       }
-      if (!lat || !lng) return;
+      if (!isFinite(lat) || !isFinite(lng) || (lat === 0 && lng === 0)) return;
 
       const price = fmtNum(p[priceKey]);
       const isRup = price === null;
@@ -707,11 +532,10 @@
       const marker = L.circleMarker([lat, lng], {
         radius: 7, fillColor: color,
         color: isRup ? '#757575' : darken(color),
-        weight: 1.5, opacity: 1,
-        fillOpacity: isRup ? 0.45 : 0.87
+        weight: 1.5, opacity: 1, fillOpacity: isRup ? 0.45 : 0.87
       });
 
-      marker.bindPopup(buildPopup(p, fuel, priceKey, dateKey, price, color), {
+      marker.bindPopup(buildPopup(p, fuel, priceKey, dateKey), {
         maxWidth: 250, minWidth: 228, autoPan: true, closeButton: true
       });
 
@@ -719,21 +543,13 @@
       marker.on('mouseout',  function() { this.setStyle({ radius: 7,  weight: 1.5, fillOpacity: isRup ? 0.45 : 0.87 }); });
       markers.push(marker);
     });
-
     state.markersLayer = L.layerGroup(markers).addTo(state.map);
   }
 
-  // ============================================================
-  // BUILD POPUP
-  // ============================================================
-  function buildPopup(p, fuel, priceKey, dateKey, currentPrice, currentColor) {
+  function buildPopup(p, fuel, priceKey, dateKey) {
     if (!p) return '<div style="padding:12px;color:#999">Données indisponibles</div>';
-
-    const ville   = String(p['Ville'] || p['commune'] || '').toUpperCase();
-    const adresse = String(p['Adresse'] || p['adresse'] || '');
-    const cp      = String(p['Code postal'] || '');
-    const auto24  = String(p['Automate 24-24 (oui/non)'] || '').toLowerCase() === 'oui';
-
+    const ville   = String(p['Ville'] || p.ville || p.commune || '').toUpperCase();
+    const adresse = String(p['Adresse'] || p.adresse || '');
     const allFuels = ['Gazole','SP95','SP98','E10','E85','GPLc'];
     let pricesHTML = '';
 
@@ -742,8 +558,6 @@
       const dKey = FUEL_DATE_KEYS[f];
       const val  = fmtNum(p[pKey]);
       const isF  = f === fuel;
-      const rupDef  = p['Carburants en rupture definitive'] || '';
-      const rupTemp = p['Carburants en rupture temporaire'] || '';
 
       let cls = 'cwp-price' + (isF ? ' featured' : '');
       let valStr = '—';
@@ -755,8 +569,9 @@
         datePart = ds ? `<div class="cwp-price-date">il y a ${ds}</div>` : '';
       } else {
         cls += ' rupture';
-        if (rupDef.includes(f))       valStr = 'Rupture déf.';
-        else if (rupTemp.includes(f)) valStr = 'Rupture temp.';
+        const rupType = getRuptureType(p, f);
+        if (rupType === 'definitive')      valStr = 'Rupture déf.';
+        else if (rupType === 'temporaire') valStr = 'Rupture temp.';
       }
 
       pricesHTML += `
@@ -766,14 +581,9 @@
           ${datePart}
         </div>`;
     });
-
-    const auto24Tag = auto24
-      ? '<span class="cwp-tag">⚡ 24h/24</span>'
-      : '';
-
+    const auto24Tag = is24h(p) ? '<span class="cwp-tag">24h/24</span>' : '';
     return `
       <div class="cwp-header">
-        <div class="cwp-brand">Station service</div>
         <div class="cwp-name">${ville}</div>
         <div class="cwp-addr">${adresse.toUpperCase()}</div>
       </div>
@@ -783,16 +593,18 @@
       </div>`;
   }
 
-  // ============================================================
-  // STATS
-  // ============================================================
   function renderStats(features, fuel, priceKey) {
     const prices = features
-      .map(f => ({ val: fmtNum(f.properties[priceKey]), ville: (f.properties['Ville'] || f.properties['commune'] || '').toUpperCase() }))
-      .filter(x => x.val !== null);
+      .map(f => {
+        const p = f.properties || {};
+        return { val: fmtNum(p[priceKey]), ville: (p['Ville'] || p.ville || p.commune || '').toUpperCase() };
+      }).filter(x => x.val !== null);
 
     const count    = features.length;
-    const rupCount = features.filter(f => fmtNum(f.properties[priceKey]) === null).length;
+    const rupCount = features.filter(f => fmtNum((f.properties || {})[priceKey]) === null).length;
+
+    // Nom du département sous "Prix moyen"
+    document.getElementById('stat-avg-sub').textContent = DEPTS[state.filters.dept].name;
 
     document.getElementById('stat-count').textContent = count;
     document.getElementById('stat-rupture').textContent = rupCount > 0 ? `${rupCount} en rupture` : `${fuel} dispo`;
@@ -830,9 +642,6 @@
     el.textContent = `Mis à jour le ${dd}/${mo} à ${hh}h${mm}`;
   }
 
-  // ============================================================
-  // UI
-  // ============================================================
   function showLoader(show) {
     const el = document.getElementById('cw-loader');
     if (show) {
@@ -849,19 +658,16 @@
     fetchData().finally(() => btn.classList.remove('spinning'));
   };
 
-  // ============================================================
-  // INIT
-  // ============================================================
   function init() {
-    state.map = L.map('cw-map', { zoomControl: false }).setView(LYON_CENTER, DEFAULT_ZOOM);
+    const deptInfo = DEPTS[state.filters.dept];
+    state.map = L.map('cw-map', { zoomControl: false }).setView(deptInfo.center, deptInfo.zoom);
     L.control.zoom({ position: 'topright' }).addTo(state.map);
 
-    L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
-      maxZoom: 19,
-      attribution: '&copy; OpenStreetMap &copy; CARTO'
-    }).addTo(state.map);
+    L.tileLayer('https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png', {
+  maxZoom: 19,
+  attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>, Tiles courtesy of <a href="https://www.hotosm.org/">HOT</a>'
+}).addTo(state.map);
 
-    // Fuel buttons
     document.querySelectorAll('.cw-fuel').forEach(btn => {
       btn.addEventListener('click', function () {
         document.querySelectorAll('.cw-fuel').forEach(b => b.classList.remove('active'));
@@ -871,7 +677,6 @@
       });
     });
 
-    // Commune filter
     document.getElementById('cw-ville').addEventListener('change', e => {
       state.filters.ville = e.target.value;
       update();
@@ -880,7 +685,6 @@
     fetchData();
     setInterval(fetchData, 15 * 60 * 1000);
 
-    // Fix carte après resize iframe
     setTimeout(() => state.map.invalidateSize(), 300);
     window.addEventListener('resize', () => {
       clearTimeout(window._cwResizeT);
@@ -888,11 +692,8 @@
     });
   }
 
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', init);
-  } else {
-    init();
-  }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
+  else init();
 
 })();
 </script>
